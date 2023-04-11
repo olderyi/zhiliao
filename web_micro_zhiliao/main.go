@@ -11,7 +11,9 @@ import (
 	"go-micro.dev/v4/selector"
 	"go-micro.dev/v4/web"
 	"net/http"
+	_ "user_micro_zhiliao/database"
 	userPb "user_micro_zhiliao/proto"
+	busRouter "web_micro_zhiliao/router"
 )
 
 var (
@@ -25,11 +27,13 @@ func main() {
 	)
 	// router
 	router := gin.Default()
-	router.GET("/test", ServiceOne)
+	busRouter.InitRouter(router)
+	//router.GET("/test", ServiceOne)
 	// router组
 	//router := router.InitrRouter(rpcService.Client())
 
 	srv := web.NewService(
+		web.Address(":8088"),
 		web.Name(service),
 		web.Version(version),
 		web.Handler(router),
