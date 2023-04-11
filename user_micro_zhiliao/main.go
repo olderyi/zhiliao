@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/go-micro/plugins/v4/registry/consul"
 	"github.com/go-micro/plugins/v4/server/grpc"
+	"go-micro.dev/v4/registry"
 	"user_micro_zhiliao/handler"
 	pb "user_micro_zhiliao/proto"
 
@@ -17,7 +18,9 @@ var (
 
 func main() {
 	// consul
-	consulReg := consul.NewRegistry()
+	consulReg := consul.NewRegistry(
+		registry.Addrs("127.0.0.1:8500"),
+	)
 	// Create service
 	srv := micro.NewService()
 	srv.Init(
